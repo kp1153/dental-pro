@@ -1,13 +1,36 @@
+"use client";
+import { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+
+const slides = [
+  "/images/1.jpeg",
+  "/images/2.jpeg",
+  "/images/3.jpeg",
+  "/images/4.jpeg",
+  "/images/5.jpeg",
+];
 
 export default function Hero() {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % slides.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const prev = () => setCurrent((p) => (p - 1 + slides.length) % slides.length);
+  const next = () => setCurrent((p) => (p + 1) % slides.length);
+
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0a0f1e]">
 
       <div className="absolute inset-0 z-0">
         <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-green-700/20 blur-[120px]" />
         <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full bg-yellow-400/10 blur-[120px]" />
-        <div className="absolute top-[30%] right-[20%] w-[300px] h-[300px] rounded-full bg-blue-600/10 blur-[100px]" />
       </div>
 
       <div className="absolute inset-0 z-0 opacity-5"
@@ -38,20 +61,18 @@ export default function Hero() {
             <span className="text-green-400">जिम्मेदारी</span>
           </h1>
 
-          <p className="text-gray-400 text-lg leading-relaxed mb-4 max-w-lg">
-            डॉ. अनवर अली — BDS, KGMU लखनऊ
-          </p>
+          <p className="text-gray-400 text-lg leading-relaxed mb-4 max-w-lg">डॉ. अनवर अली — BDS, KGMU लखनऊ</p>
           <p className="text-gray-500 text-base leading-relaxed mb-10 max-w-lg">
             आधुनिक तकनीक और अनुभवी हाथों से बेहतरीन दंत चिकित्सा। दर्द रहित इलाज, विश्वसनीय परिणाम।
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
             <a href="tel:6387129705"
-              className="group relative bg-yellow-400 text-[#0a0f1e] font-extrabold px-8 py-4 rounded-2xl text-base hover:bg-yellow-300 transition-all shadow-xl shadow-yellow-400/20 overflow-hidden">
-              <span className="relative z-10">📞 अभी अपॉइंटमेंट लें</span>
+              className="bg-yellow-400 text-[#0a0f1e] font-extrabold px-8 py-4 rounded-2xl text-base hover:bg-yellow-300 transition shadow-xl shadow-yellow-400/20">
+              📞 अभी अपॉइंटमेंट लें
             </a>
             <Link href="#services"
-              className="border border-white/15 text-white font-bold px-8 py-4 rounded-2xl text-base hover:bg-white/5 hover:border-white/30 transition-all">
+              className="border border-white/15 text-white font-bold px-8 py-4 rounded-2xl text-base hover:bg-white/5 hover:border-white/30 transition">
               हमारी सेवाएं →
             </Link>
           </div>
@@ -70,18 +91,44 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="flex-shrink-0 relative">
-          <div className="w-72 h-72 md:w-80 md:h-80 rounded-3xl bg-gradient-to-br from-green-700/30 via-[#0d1f4f] to-yellow-400/10 border border-white/10 flex items-center justify-center shadow-2xl relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-green-600/10 to-transparent" />
-            <div className="relative z-10 text-center p-8">
-              <div className="text-8xl mb-4">👨‍⚕️</div>
-              <p className="text-white font-extrabold text-xl">डॉ. अनवर अली</p>
-              <p className="text-green-400 text-xs font-bold mt-1 tracking-wider">DENTAL SURGEON</p>
-              <div className="mt-4 bg-yellow-400/10 border border-yellow-400/20 rounded-xl px-4 py-2">
-                <p className="text-yellow-400 text-xs font-bold">रजि. सं. A17333</p>
-              </div>
+        <div className="flex-shrink-0 relative w-72 md:w-80">
+          <div className="relative w-full h-80 rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={current}
+                initial={{ x: 100, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: -100, opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                className="absolute inset-0"
+              >
+                <Image
+                  src={slides[current]}
+                  alt={`slide-${current + 1}`}
+                  fill
+                  className="object-cover"
+                />
+              </motion.div>
+            </AnimatePresence>
+
+            <button onClick={prev}
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white w-8 h-8 rounded-full flex items-center justify-center z-10 transition">
+              ‹
+            </button>
+            <button onClick={next}
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white w-8 h-8 rounded-full flex items-center justify-center z-10 transition">
+              ›
+            </button>
+
+            <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2 z-10">
+              {slides.map((_, i) => (
+                <button key={i} onClick={() => setCurrent(i)}
+                  className={`w-2 h-2 rounded-full transition ${i === current ? "bg-yellow-400" : "bg-white/40"}`}
+                />
+              ))}
             </div>
           </div>
+
           <div className="absolute -top-3 -right-3 bg-green-600 text-white text-xs font-extrabold px-3 py-2 rounded-xl shadow-lg">
             ✓ BDS KGMU
           </div>
