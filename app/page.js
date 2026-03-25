@@ -1,11 +1,11 @@
 import Hero from "@/components/Hero";
-import FixTeeth from "@/app/fix-teeth/page";
-import RCT from "@/app/rct/page";
-import Capping from "@/app/capping/page";
-import XRay from "@/app/xray/page";
-import Pyorrhea from "@/app/pyorrhea/page";
-import Braces from "@/app/braces/page";
-import Contact from "@/app/contact/page";
+import FixTeeth from "@/components/FixTeeth";
+import RCT from "@/components/RCT";
+import Capping from "@/components/Capping";
+import XRay from "@/components/XRay";
+import Pyorrhea from "@/components/Pyorrhea";
+import Braces from "@/components/Braces";
+import Contact from "@/components/Contact";
 
 export default function Home() {
   return (
