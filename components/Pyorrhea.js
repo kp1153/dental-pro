@@ -1,10 +1,5 @@
 import Link from "next/link";
 
-export const metadata = {
-  title: "पायरिया — मसूड़ों का इलाज — एडवांस डेंटल क्लिनिक, डुमरियागंज",
-  description: "पायरिया यानी पेरियोडोन्टाइटिस का समय पर इलाज करवाएं। मसूड़ों से खून, सूजन और दाँत हिलना — सब ठीक होगा। डॉ. अनवर अली — 6387129705",
-  keywords: "पायरिया, मसूड़ों की बीमारी, periodontitis, मसूड़ों से खून, दाँत हिलना, डुमरियागंज",
-};
 
 const stats = [
   { num: "१००%", label: "इलाज संभव है" },
@@ -78,11 +73,11 @@ const faqs = [
   { q: "पायरिया और दिल की बीमारी का क्या संबंध है?", a: "Brandon Dental UK के अनुसार पायरिया के बैक्टीरिया रक्त में मिलकर हृदय रोग, स्ट्रोक और मधुमेह का खतरा बढ़ाते हैं।" },
 ];
 
-export default function PyorrheaPage() {
+export default function Pyorrhea() {
   return (
-    <main className="min-h-screen bg-[#0a0f1e] text-white">
+    <div className="min-h-screen bg-[#0a0f1e] text-white">
 
-      <section className="relative py-24 px-4 text-center overflow-hidden">
+      <section id="pyorrhea" className="relative py-24 px-4 text-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-green-700/15 blur-[100px]" />
           <div className="absolute bottom-0 right-1/4 w-96 h-96 rounded-full bg-yellow-400/10 blur-[100px]" />
@@ -311,6 +306,6 @@ export default function PyorrheaPage() {
         </div>
       </section>
 
-    </main>
+    </div>
   );
 }

@@ -1,20 +1,39 @@
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
+  const links = [
+    { label: "फिक्स दाँत", hash: "fix-teeth", route: "/fix-teeth" },
+    { label: "आरसीटी", hash: "rct", route: "/rct" },
+    { label: "कैपिंग", hash: "capping", route: "/capping" },
+    { label: "डिजिटल एक्स-रे", hash: "xray", route: "/xray" },
+    { label: "पायरिया", hash: "pyorrhea", route: "/pyorrhea" },
+    { label: "ब्रेसेस", hash: "braces", route: "/braces" },
+    { label: "संपर्क", hash: "contact", route: "/contact" },
+  ];
+
   return (
     <nav className="bg-green-700 px-6 py-4">
       <div className="max-w-5xl mx-auto flex flex-col items-center gap-2">
-        <span className="text-white font-extrabold text-xl tracking-wide">🦷 एडवांस डेंटल क्लिनिक</span>
+        <Link href="/" className="text-white font-extrabold text-xl tracking-wide">
+          🦷 एडवांस डेंटल क्लिनिक
+        </Link>
         <span className="text-green-200 text-sm">LIC के सामने, बस्ती रोड, डुमरियागंज</span>
-        <div className="flex flex-wrap gap-8 text-sm font-medium text-white pt-2 border-t border-green-600 w-full justify-center">
-          <Link href="#home" className="hover:text-green-200 transition">होम</Link>
-          <Link href="/fix-teeth" className="hover:text-green-200 transition">फिक्स दाँत</Link>
-          <Link href="/rct" className="hover:text-green-200 transition">आरसीटी</Link>
-          <Link href="/capping" className="hover:text-green-200 transition">कैपिंग</Link>
-          <Link href="/xray" className="hover:text-green-200 transition">डिजिटल एक्स-रे</Link>
-          <Link href="/pyorrhea" className="hover:text-green-200 transition">पायरिया</Link>
-          <Link href="/braces" className="hover:text-green-200 transition">ब्रेसेस</Link>
-          <Link href="#contact" className="hover:text-green-200 transition">संपर्क</Link>
+        <div className="flex flex-wrap gap-6 text-sm font-medium text-white pt-2 border-t border-green-600 w-full justify-center">
+          <Link href="/" className="hover:text-green-200 transition">होम</Link>
+          {links.map((l, i) => (
+            <Link
+              key={i}
+              href={isHome ? `#${l.hash}` : l.route}
+              className="hover:text-green-200 transition"
+            >
+              {l.label}
+            </Link>
+          ))}
         </div>
       </div>
     </nav>

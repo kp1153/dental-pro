@@ -1,10 +1,5 @@
 import Link from "next/link";
 
-export const metadata = {
-  title: "डिजिटल एक्स-रे — एडवांस डेंटल क्लिनिक, डुमरियागंज",
-  description: "आधुनिक डिजिटल X-Ray से दाँतों की सटीक और तुरंत जाँच। डॉ. अनवर अली से संपर्क करें — 6387129705",
-  keywords: "डिजिटल एक्स-रे, dental X-ray, दाँत की जाँच, OPG, डुमरियागंज, एडवांस डेंटल क्लिनिक",
-};
 
 const stats = [
   { num: "९०%", label: "कम रेडिएशन" },
@@ -84,11 +79,11 @@ const safetyPoints = [
   "डॉक्टर के निर्देशों का पालन करें",
 ];
 
-export default function XRayPage() {
+export default function XRay() {
   return (
-    <main className="min-h-screen bg-[#0a0f1e] text-white">
+    <div className="min-h-screen bg-[#0a0f1e] text-white">
 
-      <section className="relative py-24 px-4 text-center overflow-hidden">
+      <section id="xray" className="relative py-24 px-4 text-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-green-700/15 blur-[100px]" />
           <div className="absolute bottom-0 right-1/4 w-96 h-96 rounded-full bg-yellow-400/10 blur-[100px]" />
@@ -326,6 +321,6 @@ export default function XRayPage() {
         </div>
       </section>
 
-    </main>
+    </div>
   );
 }

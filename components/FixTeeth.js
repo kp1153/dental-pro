@@ -1,10 +1,5 @@
 import Link from "next/link";
 
-export const metadata = {
-  title: "फिक्स दाँत — एडवांस डेंटल क्लिनिक, डुमरियागंज",
-  description: "टूटे या गिरे हुए दाँत की जगह स्थायी फिक्स दाँत लगवाएं। डॉ. अनवर अली से संपर्क करें — 6387129705",
-  keywords: "फिक्स दाँत, डेंटल इम्प्लांट, नकली दाँत, दाँत लगवाना, डुमरियागंज",
-};
 
 const stats = [
   { num: "१०+", label: "वर्षों का अनुभव" },
@@ -81,11 +76,11 @@ const faqs = [
   { q: "इलाज के बाद खाने-पीने में कोई परहेज होगा?", a: "शुरुआती कुछ दिन नरम खाना खाएं। बाद में सब कुछ सामान्य रूप से खा-पी सकते हैं। बस बहुत कड़ी चीजें न चबाएं।" },
 ];
 
-export default function FixTeethPage() {
+export default function FixTeeth() {
   return (
-    <main className="min-h-screen bg-[#0a0f1e] text-white">
+    <div className="min-h-screen bg-[#0a0f1e] text-white">
 
-      <section className="relative py-24 px-4 text-center overflow-hidden">
+      <section id="fix-teeth" className="relative py-24 px-4 text-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-green-700/15 blur-[100px]" />
           <div className="absolute bottom-0 right-1/4 w-96 h-96 rounded-full bg-yellow-400/10 blur-[100px]" />
@@ -301,6 +296,6 @@ export default function FixTeethPage() {
         </div>
       </section>
 
-    </main>
+    </div>
   );
 }
