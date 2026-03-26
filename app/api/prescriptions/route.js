@@ -7,17 +7,21 @@ export async function POST(request) {
   try {
     const cookieStore = await cookies();
     const role = cookieStore.get("role")?.value;
-
-    if (!role)
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    if (!role) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const body = await request.json();
-    const { patientId, date, medicines, notes } = body;
+    const { patientId, date, medicines, investigations, notes } = body;
 
-    // ✅ Required fields check
-    if (!patientId || !date || !medicines) {
+    if (!patientId || !date) {
       return NextResponse.json(
-        { error: "Missing required fields: patientId, date, medicines" },
+        { error: "Missing required fields: patientId, date" },
+        { status: 400 }
+      );
+    }
+
+    if (!medicines?.trim() && !investigations?.trim()) {
+      return NextResponse.json(
+        { error: "दवाई या जाँच — कम से कम एक जरूरी है" },
         { status: 400 }
       );
     }
@@ -25,20 +29,17 @@ export async function POST(request) {
     await db.insert(prescriptions).values({
       patientId,
       date,
-      medicines,
-      notes,
+      medicines: medicines || null,
+      investigations: investigations || null,
+      notes: notes || null,
     });
 
     return NextResponse.json({ ok: true });
-
   } catch (error) {
-    // ✅ Server console में पूरा error दिखेगा
     console.error("[POST /api/prescriptions] Error:", error);
-
     return NextResponse.json(
       {
         error: error?.message || "Internal Server Error",
-        // Development में stack trace भी भेजें
         ...(process.env.NODE_ENV === "development" && { stack: error?.stack }),
       },
       { status: 500 }

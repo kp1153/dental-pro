@@ -58,7 +58,8 @@ export default async function PrescriptionReceiptPage({ params }) {
           <div>
             <span style={{ fontSize: 13, color: "#6b7280" }}>Patient: </span>
             <span style={{ fontSize: 14, fontWeight: 700 }}>{patient?.name}</span>
-            <span style={{ fontSize: 13, color: "#6b7280", marginLeft: 12 }}>{patient?.age} वर्ष | {patient?.sex}</span>
+            {patient?.age && <span style={{ fontSize: 13, color: "#6b7280", marginLeft: 12 }}>{patient.age} वर्ष</span>}
+            {patient?.sex && <span style={{ fontSize: 13, color: "#6b7280", marginLeft: 8 }}>| {patient.sex}</span>}
             {patient?.mobile && <span style={{ fontSize: 13, color: "#6b7280", marginLeft: 12 }}>📞 {patient.mobile}</span>}
           </div>
           <div style={{ textAlign: "right" }}>
@@ -67,23 +68,39 @@ export default async function PrescriptionReceiptPage({ params }) {
           </div>
         </div>
 
-        {/* Rx Symbol */}
-        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-          <span style={{ fontSize: 28, fontWeight: 900, color: "#15803d", fontStyle: "italic" }}>Rx</span>
-          <div style={{ flex: 1, borderTop: "1px solid #d1d5db" }} />
-        </div>
-
-        {/* Medicines */}
-        <div style={{ marginBottom: 20 }}>
-          {rx.medicines?.split("\n\n").map((med, i) => (
-            <div key={i} style={{ marginBottom: 12, paddingBottom: 12, borderBottom: "1px dashed #e5e7eb" }}>
-              <div style={{ display: "flex", gap: 8 }}>
-                <span style={{ fontSize: 16, fontWeight: 700, color: "#15803d", minWidth: 24 }}>{i + 1}.</span>
-                <pre style={{ fontSize: 13, margin: 0, fontFamily: "inherit", whiteSpace: "pre-wrap" }}>{med}</pre>
+        {/* जाँच section — अगर है तो */}
+        {rx.investigations && (
+          <div style={{ background: "#fffbeb", border: "1px solid #fbbf24", borderRadius: 8, padding: "10px 14px", marginBottom: 20 }}>
+            <div style={{ fontSize: 13, fontWeight: 700, color: "#92400e", marginBottom: 8 }}>🔬 जाँच करवाएं (Investigations):</div>
+            {rx.investigations.split("\n").map((test, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4, fontSize: 13 }}>
+                <span style={{ color: "#d97706", fontWeight: 700 }}>{i + 1}.</span>
+                <span>{test}</span>
               </div>
+            ))}
+          </div>
+        )}
+
+        {/* Rx Symbol — दवाइयाँ हैं तो दिखाओ */}
+        {rx.medicines && (
+          <>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
+              <span style={{ fontSize: 28, fontWeight: 900, color: "#15803d", fontStyle: "italic" }}>Rx</span>
+              <div style={{ flex: 1, borderTop: "1px solid #d1d5db" }} />
             </div>
-          ))}
-        </div>
+
+            <div style={{ marginBottom: 20 }}>
+              {rx.medicines.split("\n\n").map((med, i) => (
+                <div key={i} style={{ marginBottom: 12, paddingBottom: 12, borderBottom: "1px dashed #e5e7eb" }}>
+                  <div style={{ display: "flex", gap: 8 }}>
+                    <span style={{ fontSize: 16, fontWeight: 700, color: "#15803d", minWidth: 24 }}>{i + 1}.</span>
+                    <pre style={{ fontSize: 13, margin: 0, fontFamily: "inherit", whiteSpace: "pre-wrap" }}>{med}</pre>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
 
         {/* Notes / Advice */}
         {rx.notes && (

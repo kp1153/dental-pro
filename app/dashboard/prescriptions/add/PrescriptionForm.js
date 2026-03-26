@@ -77,6 +77,21 @@ const MEDICINE_CATEGORIES = [
   },
 ];
 
+const INVESTIGATION_LIST = [
+  "X-Ray (IOPA) — दर्द वाला दाँत",
+  "X-Ray (OPG) — पूरा jaw",
+  "X-Ray (Bitewing) — cavity check",
+  "Blood Sugar (Fasting)",
+  "Blood Sugar (PP)",
+  "HbA1c",
+  "CBC (Complete Blood Count)",
+  "Bleeding Time / Clotting Time",
+  "HIV Test",
+  "HBsAg",
+  "Pus Culture & Sensitivity",
+  "Biopsy",
+];
+
 export default function PrescriptionForm({ pid }) {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
@@ -85,6 +100,8 @@ export default function PrescriptionForm({ pid }) {
   const [manual, setManual] = useState("");
   const [selected, setSelected] = useState({});
   const [medData, setMedData] = useState({});
+  const [selectedTests, setSelectedTests] = useState({});
+  const [manualTest, setManualTest] = useState("");
 
   function toggleMed(key, med) {
     setSelected((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -95,6 +112,10 @@ export default function PrescriptionForm({ pid }) {
 
   function updateMed(key, field, value) {
     setMedData((prev) => ({ ...prev, [key]: { ...prev[key], [field]: value } }));
+  }
+
+  function toggleTest(test) {
+    setSelectedTests((prev) => ({ ...prev, [test]: !prev[test] }));
   }
 
   async function handleSubmit() {
@@ -115,9 +136,12 @@ export default function PrescriptionForm({ pid }) {
     if (manual) selectedMeds.push(manual);
     const medicines = selectedMeds.join("\n\n");
 
-    // ✅ FIX: कम से कम एक दवाई जरूरी है
-    if (!medicines.trim()) {
-      alert("कम से कम एक दवाई select करें या manually लिखें।");
+    const testList = INVESTIGATION_LIST.filter((t) => selectedTests[t]);
+    if (manualTest.trim()) testList.push(manualTest.trim());
+    const investigations = testList.join("\n");
+
+    if (!medicines.trim() && !investigations.trim()) {
+      alert("कम से कम एक दवाई या जाँच जरूरी है।");
       setSaving(false);
       return;
     }
@@ -125,13 +149,18 @@ export default function PrescriptionForm({ pid }) {
     const res = await fetch("/api/prescriptions", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ patientId: parseInt(pid), date, medicines, notes }),
+      body: JSON.stringify({
+        patientId: parseInt(pid),
+        date,
+        medicines: medicines || null,
+        investigations: investigations || null,
+        notes,
+      }),
     });
 
     if (res.ok) {
       router.push(`/dashboard/patients/${pid}`);
     } else {
-      // ✅ FIX: Server का actual error message दिखाओ
       const data = await res.json().catch(() => ({}));
       alert(data.error || "Error saving prescription");
       setSaving(false);
@@ -155,6 +184,32 @@ export default function PrescriptionForm({ pid }) {
             <label className={labelClass}>Date</label>
             <input type="date" className={inputClass} value={date}
               onChange={(e) => setDate(e.target.value)} />
+          </div>
+        </div>
+
+        {/* जाँच Section */}
+        <div className="bg-gray-900 rounded-2xl border border-yellow-500/30 p-5">
+          <h3 className="text-yellow-400 font-bold text-sm mb-4">🔬 जाँच (Investigations)</h3>
+          <div className="grid grid-cols-2 gap-2 mb-3">
+            {INVESTIGATION_LIST.map((test) => (
+              <label key={test}
+                className={`flex items-center gap-2 rounded-xl px-3 py-2 border cursor-pointer transition text-sm ${
+                  selectedTests[test]
+                    ? "bg-yellow-900/30 border-yellow-500/50 text-white"
+                    : "bg-gray-800/50 border-gray-700/50 text-gray-300"
+                }`}>
+                <input type="checkbox" checked={!!selectedTests[test]}
+                  onChange={() => toggleTest(test)}
+                  className="w-4 h-4 accent-yellow-400 flex-shrink-0" />
+                {test}
+              </label>
+            ))}
+          </div>
+          <div>
+            <label className={labelClass}>अन्य जाँच (manual)</label>
+            <input type="text" className={inputClass} value={manualTest}
+              onChange={(e) => setManualTest(e.target.value)}
+              placeholder="जैसे: Serum Calcium, Uric Acid..." />
           </div>
         </div>
 
@@ -204,7 +259,7 @@ export default function PrescriptionForm({ pid }) {
           </div>
         ))}
 
-        {/* Manual */}
+        {/* Manual Medicine */}
         <div className="bg-gray-900 rounded-2xl border border-gray-800 p-5">
           <h3 className="text-yellow-400 font-bold text-sm mb-3">✏️ Manual Medicine (अतिरिक्त)</h3>
           <textarea rows={3} className={inputClass} value={manual}
