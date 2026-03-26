@@ -23,7 +23,7 @@ export default function PinPage() {
       body: JSON.stringify({ pin }),
     });
     if (res.ok) {
-      router.push("/receptionist");
+      router.push("/dashboard");
     } else {
       setError("Wrong PIN. Try again.");
       setPin("");
@@ -55,7 +55,7 @@ export default function PinPage() {
                 if (k === "⌫") setPin((p) => p.slice(0, -1));
                 else if (k !== "") handlePress(k);
               }}
-              className="h-14 rounded-xl text-xl font-bold bg-gray-100 hover:bg-gray-200 transition disabled:opacity-0"
+              className="h-14 rounded-xl text-xl font-bold bg-gray-100 text-gray-900 hover:bg-gray-200 transition disabled:opacity-0"
               disabled={k === ""}
             >
               {k}

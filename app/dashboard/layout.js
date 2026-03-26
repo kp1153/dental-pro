@@ -11,12 +11,15 @@ export default async function DashboardLayout({ children }) {
 
   if (!role) redirect("/login");
 
+  const role = cookieStore.get("role")?.value;
+
   const navLinks = [
     { href: "/dashboard", label: "🏠 Dashboard" },
     { href: "/dashboard/patients", label: "🧑‍⚕️ Patients" },
     { href: "/dashboard/treatments", label: "🦷 Treatments" },
     { href: "/dashboard/prescriptions", label: "💊 Prescriptions" },
     { href: "/dashboard/billing", label: "💰 Billing" },
+    ...(role === "doctor" ? [{ href: "/dashboard/settings", label: "⚙️ Settings" }] : []),
   ];
 
   return (
