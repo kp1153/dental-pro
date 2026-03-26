@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
   const cookieStore = await cookies();
-  const name = cookieStore.get("doctor_name")?.value || "Doctor";
+  const name = "डॉ. अनवर अली";
 
   const [patientCount] = await db.select({ count: sql`count(*)` }).from(patients);
   const [treatmentCount] = await db.select({ count: sql`count(*)` }).from(treatments);

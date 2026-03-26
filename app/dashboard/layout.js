@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 export default async function DashboardLayout({ children }) {
   const cookieStore = await cookies();
   const role = cookieStore.get("role")?.value;
-  const name = cookieStore.get("doctor_name")?.value;
+  const name = "डॉ. अनवर अली";
 
   if (!role) redirect("/login");
 
