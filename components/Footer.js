@@ -9,7 +9,7 @@ export default function Footer() {
         </p>
 
         <p className="text-yellow-400 font-semibold text-sm md:text-base">
-          क्रिएटिव सॉल्यूशंस द्वारा निर्मित वेबसाइट — 
+          क्रिएटिव सॉल्यूशंस द्वारा निर्मित — 
           <a 
             href="https://www.web-developer-kp.com" 
             target="_blank" 
