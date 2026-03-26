@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 const slides = [
@@ -46,39 +45,25 @@ export default function Hero() {
           </h1>
 
           <p className="text-gray-400 text-lg mb-6">
-            Modern dental care with painless treatment and trusted results.
+            आधुनिक दंत चिकित्सा — दर्दरहित इलाज और भरोसेमंद परिणाम।
           </p>
 
-          <div className="flex gap-4 justify-center md:justify-start">
-            <a
-              href="tel:6387129705"
-              className="bg-yellow-400 text-black font-bold px-8 py-4 rounded-2xl hover:scale-105 transition"
-            >
-              📞 Book Appointment
-            </a>
-
-            <Link
-              href="#services"
-              className="border border-white/20 text-white font-bold px-8 py-4 rounded-2xl hover:bg-white/10 transition"
-            >
-              Services →
-            </Link>
+          <div className="bg-yellow-400 text-black font-bold px-8 py-4 rounded-2xl inline-block">
+            📞 6387129705 / 9452531751
           </div>
 
           {/* Trust */}
           <div className="mt-10 flex gap-6 justify-center md:justify-start text-sm text-gray-400">
-            <span>⭐ 4.9 Rating</span>
-            <span>5000+ Patients</span>
-            <span>Pain-free</span>
+            <span>⭐ 4.9 रेटिंग</span>
+            <span>5000+ मरीज़</span>
+            <span>दर्दरहित इलाज</span>
           </div>
 
         </div>
 
         {/* RIGHT SLIDER */}
         <div className="w-80 relative">
-
           <div className="relative w-full h-[420px] md:h-[500px] rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-white/5 backdrop-blur-xl flex items-center justify-center">
-
             <AnimatePresence mode="wait">
               <motion.div
                 key={current}
@@ -111,9 +96,7 @@ export default function Hero() {
                 />
               ))}
             </div>
-
           </div>
-
         </div>
 
       </div>
