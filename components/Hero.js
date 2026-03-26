@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 const slides = [
@@ -37,7 +36,7 @@ export default function Hero() {
         {/* LEFT */}
         <div className="flex-1 text-center md:text-left">
 
-          <h1 className="text-5xl md:text-6xl font-extrabold leading-tight mb-6">
+          <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-4">
             <span className="text-white">आपकी </span>
             <span className="text-yellow-400">मुस्कान</span>
             <br />
@@ -45,36 +44,23 @@ export default function Hero() {
             <span className="text-green-400">जिम्मेदारी</span>
           </h1>
 
-          <p className="text-gray-400 text-lg mb-6">
-            Modern dental care with painless treatment and trusted results.
+          <p className="text-gray-400 text-base md:text-lg mb-4 max-w-lg">
+            आधुनिक दंत चिकित्सा, बिना दर्द के उपचार और भरोसेमंद परिणाम।
           </p>
 
-          <div className="flex gap-4 justify-center md:justify-start">
-            <a
-              href="tel:6387129705"
-              className="bg-yellow-400 text-black font-bold px-8 py-4 rounded-2xl hover:scale-105 transition"
-            >
-              📞 Book Appointment
-            </a>
-
-            <Link
-              href="#services"
-              className="border border-white/20 text-white font-bold px-8 py-4 rounded-2xl hover:bg-white/10 transition"
-            >
-              Services →
-            </Link>
-          </div>
-
-          {/* Trust */}
-          <div className="mt-10 flex gap-6 justify-center md:justify-start text-sm text-gray-400">
-            <span>⭐ 4.9 Rating</span>
-            <span>5000+ Patients</span>
-            <span>Pain-free</span>
+          <div className="text-gray-300 text-sm md:text-base space-y-1">
+            <p>अपॉइंटमेंट के लिए कॉल करें:</p>
+            <p className="text-yellow-400 font-semibold text-lg">
+              6387129705
+            </p>
+            <p className="text-yellow-400 font-semibold text-lg">
+              9452531751
+            </p>
           </div>
 
         </div>
 
-        {/* RIGHT SLIDER */}
+        {/* RIGHT SLIDER (UNCHANGED) */}
         <div className="w-80 relative">
 
           <div className="relative w-full h-[420px] md:h-[500px] rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-white/5 backdrop-blur-xl flex items-center justify-center">
