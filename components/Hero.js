@@ -42,6 +42,7 @@ export default function Hero() {
 
       <div className="relative z-10 max-w-5xl mx-auto px-6 py-20 flex flex-col md:flex-row items-center gap-16">
 
+        {/* Left — Text */}
         <div className="flex-1 text-center md:text-left">
           <div className="inline-flex items-center gap-2 bg-green-700/20 border border-green-600/30 text-green-400 text-xs font-bold px-4 py-2 rounded-full mb-8 tracking-widest uppercase">
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse inline-block" />
@@ -91,8 +92,13 @@ export default function Hero() {
           </div>
         </div>
 
+        {/* Right — Image Slider */}
         <div className="flex-shrink-0 relative w-72 md:w-80">
-          <div className="relative w-full h-80 rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+
+          {/* ── यही बदला — height बढ़ाई, object-contain लगाया ── */}
+          <div className="relative w-full rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-[#0d1425]"
+            style={{ aspectRatio: "3/4" }}>
+
             <AnimatePresence mode="wait">
               <motion.div
                 key={current}
@@ -106,7 +112,8 @@ export default function Hero() {
                   src={slides[current]}
                   alt={`slide-${current + 1}`}
                   fill
-                  className="object-cover"
+                  className="object-contain"
+                  sizes="(max-width: 768px) 288px, 320px"
                 />
               </motion.div>
             </AnimatePresence>

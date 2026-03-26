@@ -5,6 +5,7 @@ export default function Footer() {
         <p className="text-white font-extrabold text-xl tracking-wide">🦷 एडवांस डेंटल क्लिनिक</p>
         <p className="text-green-200 text-sm">LIC के सामने, बस्ती रोड, डुमरियागंज</p>
         <p className="text-green-200 text-sm">📞 6387129705 | 9452531751</p>
+        <p className="text-green-200 text-sm">🕐 सोम–शनि: सुबह 10 बजे – शाम 7 बजे &nbsp;|&nbsp; रविवार: बंद</p>
         <p className="text-green-300 text-xs mt-3">© 2026 सर्वाधिकार सुरक्षित — डॉ. अनवर अली</p>
         <p className="text-green-300 text-xs">
           क्रिएटिव सॉल्यूशंस{" "}
