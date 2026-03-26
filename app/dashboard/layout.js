@@ -4,53 +4,46 @@ import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
-export default async function DashboardLayout({ children }) {
+export default async function DashboardLayout(props) {
+  const { children } = props;
+
   const cookieStore = await cookies();
   const role = cookieStore.get("role")?.value;
-  const name = "डॉ. अनवर अली";
+  const name = "Dr. Anwar Ali";
 
-  if (!role) redirect("/login");
+  if (!role) {
+    redirect("/login");
+  }
 
   const navLinks = [
-    { href: "/dashboard", label: "🏠 Dashboard" },
-    { href: "/dashboard/patients", label: "🧑‍⚕️ Patients" },
-    { href: "/dashboard/treatments", label: "🦷 Treatments" },
-    { href: "/dashboard/prescriptions", label: "💊 Prescriptions" },
-    { href: "/dashboard/billing", label: "💰 Billing" },
-    ...(role === "doctor"
-      ? [{ href: "/dashboard/settings", label: "⚙️ Settings" }]
-      : []),
+    { href: "/dashboard", label: "Dashboard" },
+    { href: "/dashboard/patients", label: "Patients" },
+    { href: "/dashboard/appointments", label: "Appointments" },
+    { href: "/dashboard/settings", label: "Settings" },
   ];
 
   return (
-    <div className="min-h-screen flex bg-gray-950 text-white">
-      {/* Sidebar */}
-      <aside className="w-56 bg-gray-900 border-r border-gray-800 flex flex-col py-6 px-4 gap-1">
-        <div className="text-yellow-400 font-extrabold text-lg mb-6 px-2">🦷 Dental Pro</div>
+    <div className="flex min-h-screen">
+      <aside className="w-64 bg-gray-900 text-white p-5">
+        <h2 className="text-xl font-bold mb-6">Dental Pro</h2>
+        <p className="mb-4 text-sm text-gray-300">{name}</p>
 
-        {navLinks.map((l) => (
-          <Link
-            key={l.href}
-            href={l.href}
-            className="px-3 py-2 rounded-lg text-sm text-gray-300 hover:bg-gray-800 hover:text-white transition"
-          >
-            {l.label}
-          </Link>
-        ))}
-
-        <div className="mt-auto pt-6 border-t border-gray-800">
-          <p className="text-xs text-gray-500 px-2 mb-2">{name || "Doctor"}</p>
-          <a
-            href="/api/logout"
-            className="block px-3 py-2 rounded-lg text-sm text-red-400 hover:bg-gray-800 transition"
-          >
-            🚪 Logout
-          </a>
-        </div>
+        <nav className="flex flex-col gap-2">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="px-3 py-2 rounded hover:bg-gray-700"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
       </aside>
 
-      {/* Main */}
-      <main className="flex-1 p-8 overflow-auto">{children}</main>
+      <main className="flex-1 bg-gray-100 p-6">
+        {children}
+      </main>
     </div>
   );
 }
