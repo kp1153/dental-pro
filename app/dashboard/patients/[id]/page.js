@@ -3,6 +3,7 @@ import { patients, treatments, prescriptions, billing } from "@/lib/schema";
 import { eq, desc } from "drizzle-orm";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import PatientActions from "./PatientActions";
 
 export const dynamic = "force-dynamic";
 
@@ -28,7 +29,11 @@ export default async function PatientDetailPage({ params }) {
           <p className="text-gray-400 text-sm">{patient.patientNumber} | {patient.age} वर्ष | {patient.sex} | 📞 {patient.mobile}</p>
           <p className="text-gray-500 text-xs mt-1">{patient.address}</p>
         </div>
-        <Link href="/dashboard/patients" className="text-gray-400 text-sm hover:text-white">← वापस</Link>
+        <div className="flex items-center gap-3">
+          {/* Edit / Delete — Client Component */}
+          <PatientActions patient={patient} />
+          <Link href="/dashboard/patients" className="text-gray-400 text-sm hover:text-white">← वापस</Link>
+        </div>
       </div>
 
       {/* Quick stats */}
