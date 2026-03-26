@@ -99,6 +99,7 @@ export default function PrescriptionForm({ pid }) {
 
   async function handleSubmit() {
     setSaving(true);
+
     const selectedMeds = [];
     let idx = 0;
     for (const cat of MEDICINE_CATEGORIES) {
@@ -114,6 +115,13 @@ export default function PrescriptionForm({ pid }) {
     if (manual) selectedMeds.push(manual);
     const medicines = selectedMeds.join("\n\n");
 
+    // ✅ FIX: कम से कम एक दवाई जरूरी है
+    if (!medicines.trim()) {
+      alert("कम से कम एक दवाई select करें या manually लिखें।");
+      setSaving(false);
+      return;
+    }
+
     const res = await fetch("/api/prescriptions", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -123,7 +131,9 @@ export default function PrescriptionForm({ pid }) {
     if (res.ok) {
       router.push(`/dashboard/patients/${pid}`);
     } else {
-      alert("Error saving prescription");
+      // ✅ FIX: Server का actual error message दिखाओ
+      const data = await res.json().catch(() => ({}));
+      alert(data.error || "Error saving prescription");
       setSaving(false);
     }
   }
