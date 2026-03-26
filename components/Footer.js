@@ -8,12 +8,13 @@ export default function Footer() {
           © 2026 सर्वाधिकार सुरक्षित
         </p>
 
-        <p className="text-yellow-400 font-semibold text-sm md:text-base">
+        <p className="text-white font-semibold text-sm md:text-base">
           क्रिएटिव सॉल्यूशंस द्वारा निर्मित — 
           <a 
             href="https://www.web-developer-kp.com" 
             target="_blank" 
             rel="noopener noreferrer"
+
             className="underline ml-1"
           >
             www.web-developer-kp.com
