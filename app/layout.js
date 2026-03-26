@@ -2,6 +2,7 @@ import { Geist } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import PWARegister from "@/components/PWARegister";
 
 const geist = Geist({
   variable: "--font-geist-sans",
@@ -13,6 +14,15 @@ export const metadata = {
   description: "डुमरियागंज के सबसे विश्वसनीय दंत चिकित्सक। RCT, फिक्स दाँत, कैपिंग, पायरिया इलाज, डिजिटल X-Ray। अभी अपॉइंटमेंट लें — 6387129705",
   keywords: "दंत चिकित्सक, डुमरियागंज, डॉ. अनवर अली, RCT, दाँत का इलाज, एडवांस डेंटल क्लिनिक",
   authors: [{ name: "डॉ. अनवर अली" }],
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Dental Pro",
+  },
+  icons: {
+    apple: "/icon-192x192.png",
+  },
   openGraph: {
     title: "डॉ. अनवर अली — एडवांस डेंटल क्लिनिक",
     description: "डुमरियागंज के सबसे विश्वसनीय दंत चिकित्सक। अभी अपॉइंटमेंट लें।",
@@ -27,6 +37,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="hi" className={`${geist.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-[#0a0f1e] text-white">
+        <PWARegister />
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

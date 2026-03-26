@@ -2,7 +2,7 @@ require("dotenv").config({ path: ".env.local" });
 const { defineConfig } = require("drizzle-kit");
 
 module.exports = defineConfig({
-  schema: "./lib/schema.js",
+  schema: "./db/schema.js",
   out: "./drizzle",
   dialect: "turso",
   dbCredentials: {
