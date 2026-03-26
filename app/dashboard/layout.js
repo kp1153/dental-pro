@@ -11,14 +11,19 @@ export default async function DashboardLayout({ children }) {
 
   if (!role) redirect("/login");
 
-  const navLinks = [
-    { href: "/dashboard", label: "🏠", full: "Dashboard" },
-    { href: "/dashboard/patients", label: "🧑‍⚕️", full: "Patients" },
-    { href: "/dashboard/treatments", label: "🦷", full: "Treatments" },
-    { href: "/dashboard/prescriptions", label: "💊", full: "Prescriptions" },
-    { href: "/dashboard/billing", label: "💰", full: "Billing" },
-    ...(role === "doctor" ? [{ href: "/dashboard/settings", label: "⚙️", full: "Settings" }] : []),
-  ];
+  const navLinks = role === "doctor"
+    ? [
+        { href: "/dashboard", label: "🏠", full: "Dashboard" },
+        { href: "/dashboard/patients", label: "🧑‍⚕️", full: "Patients" },
+        { href: "/dashboard/treatments", label: "🦷", full: "Treatments" },
+        { href: "/dashboard/prescriptions", label: "💊", full: "Prescriptions" },
+        { href: "/dashboard/billing", label: "💰", full: "Billing" },
+        { href: "/dashboard/settings", label: "⚙️", full: "Settings" },
+      ]
+    : [
+        { href: "/dashboard/patients", label: "🧑‍⚕️", full: "Patients" },
+        { href: "/dashboard/patients/add", label: "➕", full: "नया मरीज़" },
+      ];
 
   return (
     <div className="min-h-screen bg-gray-950 text-white">
