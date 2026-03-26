@@ -9,7 +9,9 @@ export async function GET(req) {
   const code = searchParams.get("code");
 
   if (!code) {
-    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_URL}/login?error=no_code`);
+    return NextResponse.redirect(
+      `${process.env.NEXT_PUBLIC_URL}/login?error=no_code`,
+    );
   }
 
   const tokenRes = await fetch("https://oauth2.googleapis.com/token", {
@@ -26,7 +28,9 @@ export async function GET(req) {
 
   const tokenData = await tokenRes.json();
   if (!tokenData.access_token) {
-    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_URL}/login?error=token_failed`);
+    return NextResponse.redirect(
+      `${process.env.NEXT_PUBLIC_URL}/login?error=token_failed`,
+    );
   }
 
   const userRes = await fetch("https://www.googleapis.com/oauth2/v2/userinfo", {
@@ -35,11 +39,26 @@ export async function GET(req) {
 
   const googleUser = await userRes.json();
   if (!googleUser.email) {
-    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_URL}/login?error=user_failed`);
+    return NextResponse.redirect(
+      `${process.env.NEXT_PUBLIC_URL}/login?error=user_failed`,
+    );
+  }
+  const ALLOWED_EMAILS = [
+    "prasad.kamta@gmail.com",
+    "dentistanwarali@gmail.com",
+  ];
+
+  if (!ALLOWED_EMAILS.includes(googleUser.email)) {
+    return NextResponse.redirect(
+      `${process.env.NEXT_PUBLIC_URL}/login?error=unauthorized`,
+    );
   }
 
   // SaaS logic
-  const existing = await db.select().from(users).where(eq(users.email, googleUser.email));
+  const existing = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, googleUser.email));
 
   const now = new Date();
 
@@ -59,11 +78,12 @@ export async function GET(req) {
     if (user.status !== "active") {
       const expiry = new Date(user.expiryDate);
       if (now > expiry) {
-        await db.update(users)
+        await db
+          .update(users)
           .set({ status: "expired" })
           .where(eq(users.email, googleUser.email));
         return NextResponse.redirect(
-          `https://web-developer-kp.com/payment?software=dental`
+          `https://web-developer-kp.com/payment?software=dental`,
         );
       }
     }
