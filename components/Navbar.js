@@ -1,10 +1,32 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const pathname = usePathname();
   const isHome = pathname === "/";
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [installed, setInstalled] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    });
+    window.addEventListener("appinstalled", () => {
+      setInstalled(true);
+      setDeferredPrompt(null);
+    });
+  }, []);
+
+  const handleInstall = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === "accepted") setInstalled(true);
+    setDeferredPrompt(null);
+  };
 
   const links = [
     { label: "फिक्स दाँत", hash: "fix-teeth", route: "/fix-teeth" },
@@ -34,6 +56,14 @@ export default function Navbar() {
               {l.label}
             </Link>
           ))}
+          {!installed && (
+            <button
+              onClick={handleInstall}
+              className="hover:text-green-200 transition flex items-center gap-1"
+            >
+              📲 मोबाइल ऐप
+            </button>
+          )}
         </div>
       </div>
     </nav>

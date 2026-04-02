@@ -49,7 +49,7 @@ export default function Hero() {
           </p>
 
           <div className="bg-yellow-400 text-black font-bold px-8 py-4 rounded-2xl inline-block">
-            📞 6387129705 / 9452531751
+            📞 6387129705
           </div>
 
           {/* Trust */}
